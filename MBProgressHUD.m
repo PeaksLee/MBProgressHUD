@@ -81,9 +81,7 @@ static const CGFloat MBDefaultDetailsLabelFontSize = 12.f;
     _animationType = MBProgressHUDAnimationFade;
     _mode = MBProgressHUDModeIndeterminate;
     _defaultMotionEffectsEnabled = YES;
-    _margin = 20.f;
     _contentInsets = UIEdgeInsetsMake(20, 20, 20, 20);
-    _margin = 20.0f;
     _defaultMotionEffectsEnabled = NO;
 
     if (@available(iOS 13.0, tvOS 13, *)) {
@@ -528,8 +526,7 @@ static const CGFloat MBDefaultDetailsLabelFontSize = 12.f;
     NSDictionary *metrics = @{@"insetLeft" : @(self.contentInsets.left),
                               @"insetRight" : @(self.contentInsets.right),
                               @"insetTop" : @(self.contentInsets.top),
-                              @"insetBottom" : @(self.contentInsets.bottom),
-                              @"margin" : @(self.margin)};
+                              @"insetBottom" : @(self.contentInsets.bottom)};
 
     NSMutableArray *subviews = [NSMutableArray arrayWithObjects:self.topSpacer, self.label, self.detailsLabel, self.button, self.bottomSpacer, nil];
     if (self.indicator) [subviews insertObject:self.indicator atIndex:1];
@@ -553,8 +550,8 @@ static const CGFloat MBDefaultDetailsLabelFontSize = 12.f;
 
     // Ensure minimum side margin is kept
     NSMutableArray *sideConstraints = [NSMutableArray array];
-    [sideConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"|-(>=margin)-[bezel]-(>=margin)-|" options:0 metrics:metrics views:NSDictionaryOfVariableBindings(bezel)]];
-    [sideConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(>=margin)-[bezel]-(>=margin)-|" options:0 metrics:metrics views:NSDictionaryOfVariableBindings(bezel)]];
+    [sideConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"|-(>=insetLeft)-[bezel]-(>=insetRight)-|" options:0 metrics:metrics views:NSDictionaryOfVariableBindings(bezel)]];
+    [sideConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(>=insetTop)-[bezel]-(>=insetBottom)-|" options:0 metrics:metrics views:NSDictionaryOfVariableBindings(bezel)]];
     [self applyPriority:999.f toConstraints:sideConstraints];
     [self addConstraints:sideConstraints];
 
@@ -666,13 +663,6 @@ static const CGFloat MBDefaultDetailsLabelFontSize = 12.f;
 - (void)setOffset:(CGPoint)offset {
     if (!CGPointEqualToPoint(offset, _offset)) {
         _offset = offset;
-        [self setNeedsUpdateConstraints];
-    }
-}
-
-- (void)setMargin:(CGFloat)margin {
-    if (margin != _margin) {
-        _margin = margin;
         [self setNeedsUpdateConstraints];
     }
 }

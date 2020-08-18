@@ -234,14 +234,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (assign, nonatomic) CGPoint offset UI_APPEARANCE_SELECTOR;
 
 /**
- * The amount of space between the HUD edge and the HUD contentView.
- * This also represents the minimum bezel distance to the edge of the HUD view.
- * Defaults to 20.f
- */
-@property (assign, nonatomic) CGFloat margin;
-
-
-/**
  * The amount of space between the HUD contentView and the HUD elements (labels, indicators or custom views).
  * This also represents the minimum bezel distance to the edge of the HUD view.
  * use to replace margin
